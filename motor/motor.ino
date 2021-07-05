@@ -18,6 +18,7 @@ void setup(){
    pinMode(backCLOCKWISE, OUTPUT);
    pinMode(frontBACKWISE, OUTPUT);
    pinMode(frontCLOCKWISE, OUTPUT);
+   Serial.begin(9600);
 }
 
 void moveBackward()
@@ -73,35 +74,23 @@ void moveLeft()
 }
 
 void loop(){
-  moveForward();
-  delay(2000);
-  moveBackward();
-  delay(2000);
-  moveLeft();
-  delay(2000);
-  moveRight();
-  delay(2000);
-//   analogWrite(right1, 0);
-//   analogWrite(right2, speed);
-//   analogWrite(left1, 0);
-//   analogWrite(left2, speed);
-//   delay(2000);
-//
-//   analogWrite(right1, speed);
-//   analogWrite(right2, 0);
-//   analogWrite(left1, speed);
-//   analogWrite(left2, 0);
-//   delay(2000);
-//
-//   analogWrite(back1, 0);
-//   analogWrite(back2, speed);
-//   analogWrite(front1, 0);
-//   analogWrite(front2, speed);
-//   delay(2000);
-//
-//   analogWrite(back1, speed);
-//   analogWrite(back2, 0);
-//   analogWrite(front1, speed);
-//   analogWrite(front2, 0);
-//   delay(2000);
+   if (Serial.available() > 0) {
+    String c = Serial.readString();
+    if (c == "F"){
+      moveForward();
+      delay(2000);
+    }
+    else if (c == "B"){
+      moveBackward();
+      delay(2000);
+    }
+    else if (c == "L"){
+      moveLeft();
+      delay(2000); 
+    }
+    else {
+      moveRight();
+      delay(2000);
+    }
+   }
 }
