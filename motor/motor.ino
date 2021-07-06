@@ -8,6 +8,7 @@
 #define rightBACKWISE 12
 
 int speed = 90;
+int c;
 
 void setup(){
    pinMode(rightCLOCKWISE, OUTPUT);
@@ -73,24 +74,45 @@ void moveLeft()
    analogWrite(rightBACKWISE, 0);
 }
 
+void stopMove(){
+   analogWrite(backBACKWISE, 0);
+   analogWrite(backCLOCKWISE, 0);
+   analogWrite(frontBACKWISE, 0);
+   analogWrite(frontCLOCKWISE, 0);
+
+   analogWrite(leftCLOCKWISE, 0);
+   analogWrite(leftBACKWISE, 0);
+   analogWrite(rightCLOCKWISE, 0);
+   analogWrite(rightBACKWISE, 0);
+}
+
 void loop(){
    if (Serial.available() > 0) {
-    String c = Serial.readString();
-    if (c == "F"){
+//    int c = Serial.read();
+    c = Serial.read();
+   Serial.println(c);
+    if (c == 87){
       moveForward();
       delay(2000);
+      
     }
-    else if (c == "B"){
+    else if (c == 83){
       moveBackward();
+    
       delay(2000);
     }
-    else if (c == "L"){
+    else if (c == 65){
       moveLeft();
+    
       delay(2000); 
     }
-    else {
+    else if (c == 68){
+    
       moveRight();
+      delay(2000); 
+    }
+   } else {
+      stopMove();
       delay(2000);
     }
-   }
 }
